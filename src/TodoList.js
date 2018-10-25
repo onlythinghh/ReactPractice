@@ -14,7 +14,7 @@ export default class TodoList extends Component {
         return (
             <div>
                 <ToList></ToList>
-                <div>
+                {/* <div>
                     <input type="text" value={this.state.inputVlaue} onChange={this.handleChangeInput} /><button onClick={this.handleBtn}>提交</button>
                 </div>
                 <ul>
@@ -25,7 +25,7 @@ export default class TodoList extends Component {
                             <li key={index} onClick={this.handleItemDel.bind(this, index)} >{item}</li>
                         )
                     })}
-                </ul>
+                </ul> */}
             </div>
 
         )

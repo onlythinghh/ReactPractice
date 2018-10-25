@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import store from '../stort/index';
 import { Input, Button, List } from 'antd';
+import TolistUI from "./TolistUI";
 import {getInputChangeAction,getAddItemAction,getDelItemAction} from '../stort/activeCreators';
 
 
 
-import 'antd/dist/antd.less';
-import './tolist.less';
+// import 'antd/dist/antd.less';
+// import './tolist.less';
 
 export default class Index extends Component {
     constructor(props) {
@@ -27,24 +28,31 @@ export default class Index extends Component {
     render() {
         const { list, inputVal } = this.state
         return (
-            <div className="ToList" >
-                <div className="listInput">
-                    <Input className="iptItem" value={inputVal} onChange={(e) => { this.handleChange(e) }} placeholder='todo info'></Input>
-                    <Button type="primary" onClick={() => { this.handleBtnClick() }}>提交</Button>
-                </div>
-                <div className="listBox">
-                    {/* {this.renderList()} */}
-                    <List
-                        size="small"
-                        bordered
-                        dataSource={list}
-                        renderItem={(item, index) => (<List.Item onClick={(index) => { this.handleDelItem(index) }}>{item}</List.Item>)}
-                    />
-                </div>
-            </div>
+            < TolistUI
+                inputVal = {this.state.inputVal}
+                handleChange={this.handleChange}
+                handleBtnClick={this.handleBtnClick}
+                list= {this.state.list}
+                handleDelItem={this.handleDelItem}
+            />
+            // <div className="ToList" >
+            //     <div className="listInput">
+            //         <Input className="iptItem" value={inputVal} onChange={(e) => { this.handleChange(e) }} placeholder='todo info'></Input>
+            //         <Button type="primary" onClick={() => { this.handleBtnClick() }}>提交</Button>
+            //     </div>
+            //     <div className="listBox">
+            //         {/* {this.renderList()} */}
+            //         <List
+            //             size="small"
+            //             bordered
+            //             dataSource={list}
+            //             renderItem={(item, index) => (<List.Item onClick={(index) => { this.handleDelItem(index) }}>{item}</List.Item>)}
+            //         />
+            //     </div>
+            // </div>
         )
     }
-    
+
     handleStoreChange = () => {
         // 更新数据. 先去取store里的数据然后替换当前组件里的数据
         this.setState(store.getState())
