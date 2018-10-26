@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import store from '../stort/index';
-import { Input, Button, List } from 'antd';
 import TolistUI from "./TolistUI";
-import {getInputChangeAction,getAddItemAction,getDelItemAction} from '../stort/activeCreators';
-
-
-
-// import 'antd/dist/antd.less';
-// import './tolist.less';
+import { getInputChangeAction, getAddItemAction, getDelItemAction } from '../stort/activeCreators';
+import axios from 'axios';
 
 export default class Index extends Component {
     constructor(props) {
@@ -15,7 +10,7 @@ export default class Index extends Component {
         // store.getState() 获取store的数据
         this.state = store.getState();
         // 监听 store 如果数据是否发生变化，若发生变化则执行handleStoreChange函数
-        store.subscribe(this.handleStoreChange.bind(this))
+        store.subscribe(this.handleStoreChange.bind(this));
     }
     renderList = () => {
         const { list } = this.state
@@ -26,13 +21,12 @@ export default class Index extends Component {
         })
     }
     render() {
-        const { list, inputVal } = this.state
         return (
             < TolistUI
-                inputVal = {this.state.inputVal}
+                inputVal={this.state.inputVal}
                 handleChange={this.handleChange}
                 handleBtnClick={this.handleBtnClick}
-                list= {this.state.list}
+                list={this.state.list}
                 handleDelItem={this.handleDelItem}
             />
             // <div className="ToList" >
@@ -53,6 +47,13 @@ export default class Index extends Component {
         )
     }
 
+    componentDidMount() {
+        axios.get('/listjson.json').then((res) => { 
+            console.log(res)
+         }).catch((error) =>{
+            console.log(error)
+         })
+    }
     handleStoreChange = () => {
         // 更新数据. 先去取store里的数据然后替换当前组件里的数据
         this.setState(store.getState())
@@ -77,7 +78,7 @@ export default class Index extends Component {
         //     type: DEL_TODO_ITEM,
         //     index
         // }
-        const action =getDelItemAction(index)
+        const action = getDelItemAction(index)
         store.dispatch(action)
     }
 }

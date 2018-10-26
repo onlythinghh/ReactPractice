@@ -8,19 +8,19 @@ export default class TolistUI  extends Component {
     super(props)
   }
 render() {
+  const {list, inputVal, } = this.props
   return(
     <div className = "ToList">
       <div className = "listInput" >
-        <Input className = "iptItem" value = {this.props.inputVal} onChange = { (e) => {this.props.handleChange(e)} } placeholder = 'todo info' ></Input>
+        <Input className = "iptItem" value = {inputVal} onChange = { (e) => {this.props.handleChange(e)} } placeholder = 'todo info' ></Input>
         <Button type = "primary" onClick = { () => {this.props.handleBtnClick()}} > 提交 </Button>
       </div>
-      <div className = "listBox" >
-        { /* {this.renderList()} */ }
+      <div className = {list ? 'listBox bluebord' : 'listBox'} >
         <List
         size = "small"
         bordered
-        dataSource = { this.props.list }
-        renderItem = {(item, index) => ( < List.Item onClick = { (index) => {this.props.handleDelItem(index)}} > { item } </List.Item>)} />
+        dataSource = { list }
+        renderItem = {(item, index) => ( < List.Item onClick = { () => {this.props.handleDelItem(index)}} > { item } </List.Item>)} />
       </div>
     </div>
   )
