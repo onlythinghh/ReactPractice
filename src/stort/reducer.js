@@ -1,4 +1,4 @@
-import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DEL_TODO_ITEM } from '../stort/activeTypes';
+import { CHANGE_INPUT_VALUE, INIT_LIST_ACTION, ADD_TODO_ITEM, DEL_TODO_ITEM } from '../stort/activeTypes';
 const defaultState = {
     inputVal: '',
     list: []
@@ -11,6 +11,12 @@ export default (state = defaultState, action) => {
         newState.inputVal = action.value;
         return newState
     }
+    if (action.type === INIT_LIST_ACTION) {
+        const newState = JSON.parse(JSON.stringify(state));
+        newState.list = action.data;
+        return newState
+    }
+
     if (action.type === ADD_TODO_ITEM) {
         const newState = JSON.parse(JSON.stringify(state));
         newState.list.push(newState.inputVal);

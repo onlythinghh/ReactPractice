@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import store from '../stort/index';
 import TolistUI from "./TolistUI";
-import { getInputChangeAction, getAddItemAction, getDelItemAction } from '../stort/activeCreators';
+import { getInputChangeAction, getAddItemAction, getDelItemAction, initListAction } from '../stort/activeCreators';
 import axios from 'axios';
+import stort from '../stort/index';
 
 export default class Index extends Component {
     constructor(props) {
@@ -48,8 +49,12 @@ export default class Index extends Component {
     }
 
     componentDidMount() {
-        axios.get('/listjson.json').then((res) => { 
-            console.log(res)
+        axios.get('/todolist.json').then((res) => {
+
+            const data = res.data
+            console.log(data)
+            const action = initListAction(data)
+            store.dispatch(action)
          }).catch((error) =>{
             console.log(error)
          })
